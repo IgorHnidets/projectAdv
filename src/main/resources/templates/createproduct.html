@@ -1,0 +1,57 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Work Item</title>
+    <div th:replace="index::boot"></div>
+
+</head>
+<body>
+
+<div th:replace="index::header"></div>
+
+<div style="display: flex" >
+    <h1 style="text-align: center; margin: auto">
+        Create new Work Item
+    </h1>
+</div>
+
+<div style="width: 70%; margin: 0 auto">
+    <form action="/product/save" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name of work</label>
+            <input  type="text" class="form-control" name="name" id="name" placeholder="Some Work">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="salary" class="form-label">Salary $</label>
+            <input  type="number" class="form-control" id="salary" name="salary" placeholder="Salary">
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input  type="number" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Preview Image</label>
+            <input  type="file" class="form-control" id="image" name="image" placeholder="Image">
+        </div>
+        <div style="display: none">
+            <input name="userId" th:value="${user.id}">
+        </div>
+
+        <div id="alert" hidden="hidden" class="alert alert-danger" role="alert">
+            Something went wrong. Please try again
+        </div>
+
+        <input type="submit" class="btn btn-primary">
+    </form>
+</div>
+
+</body>
+</html>

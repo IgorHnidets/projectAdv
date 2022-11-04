@@ -1,0 +1,30 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cabinet</title>
+    <div th:replace="index::boot"></div>
+</head>
+<body>
+
+
+<div th:replace="index::header"></div>
+
+
+<div style="margin: 50px">
+<h2>
+    My Profile
+</h2>
+    <br>
+<b>Name : </b> <span th:text="${user.firstname}"></span>
+    <span th:text="${user.lastname}"></span>
+    <br><br>
+<b>Email: </b> <span th:text="${user.email}"> </span> &nbsp;
+    <br><br>
+<img width="250" height="250" th:src="@{/images/{avatar}(avatar = ${user.avatar})}">
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet">
+    <div th:replace="registration::styles"></div>
+</head>
+<body>
+
+<div class="login-page">
+    <div class="form">
+        <form th:action="@{/login}" name="login" class="login-form" method="post">
+            <input type="text" name="username" placeholder="email">
+            <input type="text" name="password" placeholder="password">
+            <div class="error" th:if="${param.error}">
+                Incorrect password or email
+            </div>
+            <div>
+            <button type="submit">Login</button>
+            </div>
+        </form>
+        <p class="message">Dont have account? <a th:href="@{/registration}">Registr</a></p>
+    </div>
+</div>
+
+</body>
+</html>

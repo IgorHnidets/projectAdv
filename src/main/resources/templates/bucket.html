@@ -1,0 +1,61 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bucket</title>
+    <div th:replace="index::boot"></div>
+    <style>
+        .bucket-container{
+            margin-top: 25px;
+            padding-top: 25px;
+        }
+        .bucket-item{
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 16px;
+            display: flex;
+            margin: 20px;
+        }
+
+        .buttons{
+            align-self: center;
+            margin-left: auto;
+        }
+
+        .content{
+            margin: 0 20px;
+            overflow: hidden;
+        }
+        .image{
+            width: 150px;
+            height: 150px;
+
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="index::header"></div>
+
+<div class="container bucket-container">
+<div class="bucket-item" th:each="item:${items}">
+    <div class="image">
+        <img width="150px" height="150px" th:src="@{images/{image}(image=${item.image})}"
+             alt="product">
+    </div>
+
+    <div class="content">
+        <h3 th:text="${item.name}"></h3>
+        <p th:text="${item.description}">
+        </p>
+    </div>
+    <div class="buttons">
+        <a th:href="@{/deleteItem/{id}(id=${item.itemId})}" ><button  class="btn btn-danger">Remove</button></a>
+    </div>
+</div>
+</div>
+</body>
+</html>
