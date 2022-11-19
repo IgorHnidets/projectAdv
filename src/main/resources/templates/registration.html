@@ -6,12 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration</title>
-    <link rel="stylesheet">
-
+<!--    <link th:href="@{../static/styles/cssandjs/registration.css}" rel="stylesheet">-->
     <style th:fragment="styles">
         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
-
         .login-page {
             width: 360px;
             padding: 8% 0 0;
@@ -38,6 +35,19 @@
             box-sizing: border-box;
             font-size: 14px;
         }
+        .form textarea {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+            max-width: 270px;
+            min-width: 270px;
+        }
         .form button {
             font-family: "Roboto", sans-serif;
             text-transform: uppercase;
@@ -48,8 +58,6 @@
             padding: 15px;
             color: #FFFFFF;
             font-size: 14px;
-            /*-webkit-transition: all 0.3 ease;*/
-            /*transition: all 0.3 ease;*/
             cursor: pointer;
         }
         .form button:hover,.form button:active,.form button:focus {
@@ -102,8 +110,6 @@
         }
 
         body {
-            /*background: #76b852; !* fallback for old browsers *!*/
-            /*background: rgb(141,194,111);*/
             background: linear-gradient(90deg, rgb(12, 107, 196) 0%, rgb(15, 116, 203) 50%);
             font-family: "Roboto", sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -112,7 +118,11 @@
         .error{
             color: red;
             font-weight: bold;
-            margin: 10px;
+            margin: 8px;
+        }
+        .error2{
+            border: 5px solid red;
+            background: #EF3B3A;
         }
     </style>
 </head>
@@ -121,19 +131,24 @@
 
 <div class="login-page">
     <div class="form">
-        <form action="/user/save" class="login-form" method="post" enctype="multipart/form-data">
-            <input type="text" name="firstname" placeholder="firstname"/>
-            <input type="text" name="lastname" placeholder="lastname"/>
+        <form action="/user/save" onsubmit="return validateForm()" name="form" class="login-form" method="post" enctype="multipart/form-data">
+            <input id="firstname" type="text" name="firstname" placeholder="firstname"/>
+            <input id="lastname" type="text" name="lastname" placeholder="lastname"/>
+            <textarea id="descr" type="text" name="description" placeholder="description"></textarea>
+            <input id="number" type="number" name="phoneNumber" placeholder="phoneNumber"/>
             <input type="file" name="avatar">
-            <input type="text" name="email" placeholder="email">
-            <input type="password" name="password" placeholder="password">
-            <select name="role">
+            <input id="email" type="text" name="email" placeholder="email">
+            <input id="pass" type="password" name="password" placeholder="password">
+            <select style="margin: 10px" name="role">
                 <option disabled>Choose your Role</option>
                 <option value="USER">I'm want to find a job</option>
                 <option value="ADMIN">I'm employee</option>
             </select>
             <div  th:if="${param.error}" class="error">
                 Email is already exist
+            </div>
+            <div id="err" class="error" hidden>
+                Please to fill all fields
             </div>
 
             <button type="submit">Register</button>
@@ -142,5 +157,48 @@
     </div>
 </div>
 
+<script>
+    function validateForm(){
+        // const array = ['firstname','lastname','descr','number','email','pass']
+        // for (const el of array) {
+        //     if (!document.getElementById(el).value){
+        //         document.getElementById(el).style.border = '2px solid red';
+        //         document.getElementById('err').hidden = false
+        //         console.log(el)
+        //     }
+        // }
+        // return false;
+
+        let firstname = document.getElementById('firstname');
+        let last = document.getElementById('lastname');
+        let descr = document.getElementById('descr');
+        let number = document.getElementById('number');
+        let email = document.getElementById('email');
+        let pass = document.getElementById('pass');
+        let err = document.getElementById("err")
+        if (!firstname.value){
+            firstname.style.border = '2px solid red'
+            err.hidden = false
+        } if (!last.value){
+            last.style.border = '2px solid red'
+            err.hidden = false
+        }  if (!descr.value){
+            descr.style.border = '2px solid red'
+            err.hidden = false
+        } if (!number.value){
+            number.style.border = '2px solid red'
+            err.hidden = false
+        } if (!email.value){
+            email.style.border = '2px solid red'
+            err.hidden = false
+        } if (!pass.value){
+            pass.style.border = '2px solid red'
+            err.hidden = false
+        } else {
+            return true;
+        }
+        return false;
+    }
+</script>
 </body>
 </html>

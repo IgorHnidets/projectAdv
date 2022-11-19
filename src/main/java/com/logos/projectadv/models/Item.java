@@ -36,6 +36,11 @@ public class Item {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "items" )
     private List<Bucket> buckets;
 
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "items" )
+    private List<User> users;
+
+
     public Item(int itemId, String name, String description, double salary, String image) {
         this.itemId = itemId;
         this.name = name;

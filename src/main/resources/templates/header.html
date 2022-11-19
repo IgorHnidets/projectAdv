@@ -1,5 +1,5 @@
 <!
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="header">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -23,18 +23,40 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/index}" class="nav-link px-2 text-white">Home</a></li>
-                <li><a th:href="@{/cabinet}" class="nav-link px-2 text-white">Cabinet</a></li>
-                <li><a th:href="@{/getItems}" class="nav-link px-2 text-white">Liked Items</a></li>
-                <li><a th:href="@{/createproduct}" class="nav-link px-2 text-white">Create Work Item</a></li>
             </ul>
 
             <div class="text-end" >
-                <a th:href="@{/login}" th:if="${#httpServletRequest.requestURL == 'http://localhost:8080/index/home'}" ><button type="button" style="background: white; color: #0080ff;" class="btn btn-outline-light me-2">Login</button></a>
-                <a th:href="@{/registration.html}" th:if="${#httpServletRequest.requestURL == 'http://localhost:8080/index/home'}" ><button type="button" style="background: white" class="btn btn-warning">Registration</button></a>
-                <a th:href="@{/logout}" th:if="${#httpServletRequest.requestURL == 'http://localhost:8080/index'}" ><button type="button" style="background: white" class="btn btn-warning">Logout</button></a>
+                <a th:href="@{/login}" ><button type="button" style="background: white; color: #0080ff;" class="btn btn-outline-light me-2">Login</button></a>
+                <a th:href="@{/registration}" ><button type="button" style="background: white" class="btn btn-warning">Registration</button></a>
             </div>
         </div>
     </div>
 </header>
+
+<div >
+    <div class="album py-5" >
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="cards">
+                <div class="col" th:each="item : ${items}" >
+                    <div class="card shadow-sm" style="max-height: 400px;">
+                        <img th:src="@{/images/{image}(image=${item.image})}" alt="product" width="250" height="250" style="margin: 0 auto" >
+
+                        <div class="card-body">
+                            <p class="card-text" style="font-weight: bold; color: #0f71c9" th:text="${item.name}" ></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a th:href="@{/registration}">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    </a>
+                                </div>
+                                <span>Salary: <span class="text-muted" th:text=" ${item.salary}"> $</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

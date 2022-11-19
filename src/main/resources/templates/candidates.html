@@ -1,0 +1,36 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Candidates</title>
+    <div th:replace="index::boot"></div>
+    <div th:replace="index::header"></div>
+    <div th:replace="bucket::stylesB"></div>
+</head>
+<body>
+<div class="container bucket-container">
+    <div class="bucket-item" th:each="userx:${users}">
+        <div class="image">
+            <img width="150px" height="150px" th:src="@{images/{avatar}(avatar=${userx.avatar})}"
+                 alt="product">
+        </div>
+
+        <div class="content">
+            <b th:text="${userx.firstname}"></b> <b th:text="${userx.lastname}"></b>
+            <br><br>
+            <p th:text="${userx.description}"></p>
+            <b>Phone number : </b><b style="font-weight: normal" th:text="${userx.phoneNumber}"></b>
+        </div>
+        <div class="buttons">
+            <a th:href="@{/chatWith/{userId}(userId=${userx.id})}" ><button >Chat</button></a>
+        </div>
+        <div class="buttons">
+            <a th:href="@{/rejectCV/{userId}(userId=${userx.id})}" ><button  class="btn btn-danger">Reject</button></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

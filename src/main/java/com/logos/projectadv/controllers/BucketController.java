@@ -2,20 +2,14 @@ package com.logos.projectadv.controllers;
 
 import com.logos.projectadv.models.Item;
 import com.logos.projectadv.models.User;
-import com.logos.projectadv.repository.UserRepository;
 import com.logos.projectadv.service.BucketService;
 import com.logos.projectadv.service.ProductService;
 import com.logos.projectadv.service.UserService;
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +19,8 @@ import java.util.Optional;
 public class BucketController {
 
     private final BucketService bucketService;
-
     private final ProductService productService;
-
-    private final UserRepository userRepository;
+    private final UserService userService;
 
 
 
@@ -39,7 +31,7 @@ public class BucketController {
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/index");
         Item item = productService.getItemById(itemId);
-        User user = userRepository.findByEmailOrderByEmail(principal.getName());
+        User user = userService.getUserFromPrincipal(principal);
         int itemId2 = item.getItemId();
         int userId = user.getId();
         List<Item> items = bucketService.getAllItems(userId);
@@ -59,7 +51,7 @@ public class BucketController {
     @RequestMapping(value = "/getItems", method = RequestMethod.GET)
     @GetMapping("/getItems")
     String getItems(Principal principal, Model model){
-        User user = userRepository.findByEmailOrderByEmail(principal.getName());
+        User user = userService.getUserFromPrincipal(principal);
         List<Item> allItems = bucketService.getAllItems(user.getId());
         System.out.println("ITEMS -------------------------------- \n " + allItems);
         model.addAttribute("user", user);
@@ -70,7 +62,7 @@ public class BucketController {
 
     @RequestMapping(value = "/deleteItem/{id}",method = RequestMethod.GET)
     RedirectView deleteItem(@PathVariable int id,Principal principal){
-        User user = userRepository.findByEmailOrderByEmail(principal.getName());
+        User user = userService.getUserFromPrincipal(principal);
         int id1 = user.getId();
         bucketService.removeProduct(id1,id);
         RedirectView redirectView = new RedirectView();

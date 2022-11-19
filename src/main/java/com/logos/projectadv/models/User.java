@@ -25,6 +25,8 @@ public class User implements UserDetails {
 
     private String firstname;
     private String lastname;
+    private String description;
+    private String phoneNumber;
     private String avatar;
     private String email;
     private String password;
@@ -38,10 +40,19 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude
     private Bucket bucket;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "items_users",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "itemId"))
+    @ToString.Exclude
+    private List<Item> items;
 
-    public User(String firstname, String lastname, String email, String password,   Role role) {
+    public User(String firstname, String lastname,String description, String phoneNumber, String email, String password,  Role role) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.description = description;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
         this.role = role;

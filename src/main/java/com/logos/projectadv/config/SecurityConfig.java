@@ -1,5 +1,6 @@
 package com.logos.projectadv.config;
 
+import com.logos.projectadv.models.Role;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/registration","/user/save","/login","/index/home").permitAll()
-                .antMatchers("/admin**").hasRole("ADMIN")
+//                .antMatchers("/candidates","/createproduct").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -50,12 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-//    @Bean
-//    public SessionRegistry sessionRegistry(){
-//        SessionRegistry sessionRegistry = new SessionRegistryImpl();
-//        return sessionRegistry;
-//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){

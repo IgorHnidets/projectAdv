@@ -25,6 +25,7 @@
                 <li><a th:href="@{/index}" class="nav-link px-2 text-white">Home</a></li>
                 <li><a th:href="@{/cabinet}" class="nav-link px-2 text-white">Cabinet</a></li>
                 <li><a th:if="${user.role.name().equals('USER')}" th:href="@{/getItems}" class="nav-link px-2 text-white">Liked Items</a></li>
+<!--                <li><a th:if="${user.role.name().equals('ADMIN')}" th:href="@{/candidates}" class="nav-link px-2 text-white">Candidates</a></li>-->
                 <li><a th:if="${user.role.name().equals('ADMIN')}" th:href="@{/createproduct}" class="nav-link px-2 text-white">Create Work Item</a></li>
             </ul>
 

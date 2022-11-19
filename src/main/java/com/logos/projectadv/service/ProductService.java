@@ -12,5 +12,7 @@ public interface ProductService {
     Item save(Item item);
     void delete(int id);
 
+    Item getItemFromSession();
+
     String transferFile(MultipartFile file);
 }

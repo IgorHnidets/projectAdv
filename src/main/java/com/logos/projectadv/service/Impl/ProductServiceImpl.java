@@ -1,13 +1,17 @@
 package com.logos.projectadv.service.Impl;
 
 import com.logos.projectadv.models.Item;
+import com.logos.projectadv.repository.BucketRepository;
 import com.logos.projectadv.repository.ProductRepository;
 import com.logos.projectadv.service.ProductService;
 import com.logos.projectadv.utills.FileUtills;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final BucketRepository bucketRepository;
 
     @Override
     public List<Item> getAll() {
@@ -39,7 +44,17 @@ public class ProductServiceImpl implements ProductService {
     public void delete(int itemId) {
         Item itemById = getItemById(itemId);
         productRepository.deleteFromBucket(itemId);
+        productRepository.delItemFromResume(itemId);
         productRepository.delete(itemById);
+
+    }
+
+    @Override
+    public Item getItemFromSession() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        Object itemId = session.getAttribute("itemId");
+        return getItemById((Integer) itemId);
     }
 
     @Override

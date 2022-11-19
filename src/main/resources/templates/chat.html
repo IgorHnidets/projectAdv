@@ -1,0 +1,34 @@
+<!
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat</title>
+  <style>
+    .align{
+
+    }
+  </style>
+</head>
+<body style="background: #599fd5; display: flex; justify-content: center; align-items: center;">
+<div style="padding: 100px; width: auto; height: 50%; overflow: scroll; background: snow" >
+  <div th:each="ms:${chat}">
+    <div style="margin: 5px; padding: 3px;
+     border: 1px solid black;display: flex; flex-direction: column;justify-content: flex-end; align-items: flex-end;" th:text="${ms.message}"> </div>
+    <div style="font-weight: bold; font-size: 7px; float: right" th:text="${ms.timeOfSend}"></div>
+    <br>
+  </div>
+  <div class="chat" style="display: flex; justify-content: flex-end; align-items: flex-end;">
+  <form action="/messageSend" method="post">
+  <div>
+    <input name="message" type="text" placeholder="Your message"/>
+    <button type="submit" class="message-submit">Send</button>
+  </div>
+  </form>
+</div>
+</div>
+<div class="bg"></div>
+</body>
+</html>

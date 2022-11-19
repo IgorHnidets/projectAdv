@@ -7,10 +7,14 @@ import com.logos.projectadv.utills.FileUtills;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +60,28 @@ public class UserServImpl implements UserService {
     @Override
     public User update(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserFromSession() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        Object userId = session.getAttribute("userId");
+        Optional<User> byId = userRepository.findById((Integer) userId);
+        return byId.orElse(null);
+    }
+
+    @Override
+    public User getUserFromPrincipal(Principal principal) {
+        User byEmailOrderByEmail = userRepository.findByEmailOrderByEmail(principal.getName());
+        return byEmailOrderByEmail;
+    }
+
+    @Override
+    public void setIdInSession(String nameId, int id) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        session.setAttribute(nameId,id);
     }
 
     @Override
