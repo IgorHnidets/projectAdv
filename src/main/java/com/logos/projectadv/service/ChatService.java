@@ -9,4 +9,6 @@ public interface ChatService {
     Chat save(Chat chat);
 
     List<Chat> getAll(int senderId, int getterId);
+
+    String removeLast(String time);
 }

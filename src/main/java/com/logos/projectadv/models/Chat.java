@@ -18,15 +18,16 @@ public class Chat {
     private int messageId;
     private String message;
     private int getterId;
-    private Timestamp timeOfSend;
+    private String timeOfSend;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
-    public Chat(String message, int getterId, Timestamp timeOfSend, User user) {
+    public Chat(String message, int getterId, String timeOfSend, User user) {
         this.message = message;
         this.getterId = getterId;
         this.timeOfSend = timeOfSend;
         this.user = user;
     }
+
 }

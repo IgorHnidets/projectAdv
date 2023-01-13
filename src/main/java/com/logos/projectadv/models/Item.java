@@ -11,27 +11,30 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class Item implements Comparable<Item>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
 
     private String name;
+//    private String category;
     private String description;
     private double salary;
     private String image;
     private String phoneNumber;
-
     private int userId;
 
     public Item(String name, String description, String phoneNumber, double salary, int userId) {
         this.name = name;
+//        this.category = category;
         this.description = description;
         this.phoneNumber = phoneNumber;
         this.salary = salary;
         this.userId = userId;
     }
+
+
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "items" )
     private List<Bucket> buckets;
@@ -47,5 +50,10 @@ public class Item {
         this.description = description;
         this.salary = salary;
         this.image = image;
+    }
+
+    @Override
+    public int compareTo(Item o) {
+        return (int) (this.getSalary() - o.getSalary());
     }
 }

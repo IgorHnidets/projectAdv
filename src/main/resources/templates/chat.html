@@ -1,4 +1,3 @@
-<!
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -6,29 +5,79 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Chat</title>
+  <div th:replace="index::boot"></div>
   <style>
-    .align{
-
+    .main{
+      background: #599fd5;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      lign-items: center;
+    }
+    .chat{
+      padding:50px;
+      width: 50%;
+      height: 70%;
+      overflow: scroll;
+      background: snow
+    }
+    .messageTime{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
   </style>
 </head>
-<body style="background: #599fd5; display: flex; justify-content: center; align-items: center;">
-<div style="padding: 100px; width: auto; height: 50%; overflow: scroll; background: snow" >
+<body>
+<div th:replace="index::header"></div>
+<div class="main">
+<div id="chat" class="chat">
+  <a href="#" onclick="scrollToEnd('chat')">Go to End</a>
   <div th:each="ms:${chat}">
-    <div style="margin: 5px; padding: 3px;
-     border: 1px solid black;display: flex; flex-direction: column;justify-content: flex-end; align-items: flex-end;" th:text="${ms.message}"> </div>
-    <div style="font-weight: bold; font-size: 7px; float: right" th:text="${ms.timeOfSend}"></div>
-    <br>
+    <div th:if="${user.id != ms.user.id}">
+      <b style="float: left; margin: 0 5px" th:text="${getter.firstname}"></b>
+      <div style=" margin: 5px; padding: 3px;
+     border: 1px solid black; border-radius: 5px;
+     display: flex; flex-direction: column;align-items: flex-start; justify-content: flex-end" th:text="${ms.message}">
+      </div>
+      <div style="font-weight: bold; font-size: 7px; margin-left: 30px" th:text="${ms.timeOfSend}"></div>
+    </div>
+    <div th:if="${user.id == ms.user.id}">
+      <b style="float: right; margin: 0 5px">Me</b>
+      <div style=" margin: 5px; padding: 3px;
+     border: 1px solid black;border-radius: 5px;
+     display: flex; flex-direction: column;justify-content: flex-end; align-items: flex-end;" th:text="${ms.message}">
+      </div>
+      <div style="font-weight: bold; display: flex; justify-content: flex-end; font-size: 7px; margin-right: 30px" th:text="${ms.timeOfSend}"></div>
+    </div>
   </div>
-  <div class="chat" style="display: flex; justify-content: flex-end; align-items: flex-end;">
+  <div style="display: flex; justify-content: flex-end; align-items: flex-end;">
   <form action="/messageSend" method="post">
   <div>
     <input name="message" type="text" placeholder="Your message"/>
-    <button type="submit" class="message-submit">Send</button>
+    <button type="submit">Send</button>
   </div>
   </form>
 </div>
 </div>
-<div class="bg"></div>
+</div>
+<script>
+  let scrollToEnd = (elem) =>{
+    let el = document.getElementById(elem)
+    el.scrollTop = el.scrollHeight;
+  }
+  let href = window.location.href;
+
+  if (window.err.status !== 200){
+    href === 'http://localhost:8080/error'
+  }
+
+  for (let i = 0; i < 50; i++) {
+      if (href === 'http://localhost:8080/userChat' || href === `http://localhost:8080/chatWith/${i}`){
+      let e = document.getElementById('chat');
+      e.scrollTop = e.scrollHeight
+    }
+  }
+</script>
 </body>
 </html>

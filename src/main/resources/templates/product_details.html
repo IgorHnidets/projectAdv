@@ -35,11 +35,13 @@
         <hr>
         <p style="font-size: 20px;" th:text="${item.description}"></p>
         <hr>
-        <a href="#" onclick="getNumber()" style="text-decoration: none"><button class="btn">Get a phone number</button></a>
-        <a th:href="@{/sendResume}" th:if="${user.role.name().equals('USER')}">
+        <a onclick="getNumber()" style="text-decoration: none">
+            <button class="btn">Get a phone number</button>
+        </a>
+        <a  th:href="@{/sendResume}" th:if="${user.role.name().equals('USER')}">
             <button onclick="sendresume()" class="btn">Send your Resume</button>
         </a>
-        <a th:href="@{/candidates}" th:if="${user.role.name().equals('ADMIN') && item.userId == user.id}">
+        <a style="width: auto;" th:href="@{/candidates}" th:if="${user.role.name().equals('ADMIN') && item.userId == user.id}">
             <button class="btn">Candidates</button>
         </a>
         <a th:href="@{/userChat}" th:if="${user.role.name().equals('USER')}">
@@ -53,9 +55,15 @@
     </div>
 
 </div>
+<script>
+    let scrollToEnd = (elem,event) =>{
+        event.preventDefault();
+        let el = document.getElementById(elem)
+        el.scrollTop = el.scrollHeight;
+    }
+</script>
 </body>
 <script>
-
     function confirmation() {
         let del = confirm("Are you sure want to delete Item?")
         if (del){

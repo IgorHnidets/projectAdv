@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<header style="background: #0f71c9" class="p-3 text-bg-blue" >
+<header style="background: #0f71c9" class="p-3 text-bg-blue" th:fragment="header2">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -26,8 +26,8 @@
             </ul>
 
             <div class="text-end" >
-                <a th:href="@{/login}" ><button type="button" style="background: white; color: #0080ff;" class="btn btn-outline-light me-2">Login</button></a>
-                <a th:href="@{/registration}" ><button type="button" style="background: white" class="btn btn-warning">Registration</button></a>
+                <a th:if="${#httpServletRequest.requestURL == 'http://localhost:8080/index/home'}" th:href="@{/login}"><button type="button" style="background: white; color: #0080ff;" class="btn btn-outline-light me-2">Login</button></a>
+                <a th:if="${#httpServletRequest.requestURL == 'http://localhost:8080/index/home'}" th:href="@{/registration}"><button type="button" style="background: white" class="btn btn-warning">Registration</button></a>
             </div>
         </div>
     </div>
@@ -40,12 +40,11 @@
                 <div class="col" th:each="item : ${items}" >
                     <div class="card shadow-sm" style="max-height: 400px;">
                         <img th:src="@{/images/{image}(image=${item.image})}" alt="product" width="250" height="250" style="margin: 0 auto" >
-
                         <div class="card-body">
                             <p class="card-text" style="font-weight: bold; color: #0f71c9" th:text="${item.name}" ></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/registration}">
+                                    <a th:href="@{/login}">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                                     </a>
                                 </div>

@@ -78,6 +78,14 @@ public class UserServImpl implements UserService {
     }
 
     @Override
+    public Object getObjFromSession(String objectName) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        Object attribute = session.getAttribute(objectName);
+        return attribute;
+    }
+
+    @Override
     public void setIdInSession(String nameId, int id) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession();

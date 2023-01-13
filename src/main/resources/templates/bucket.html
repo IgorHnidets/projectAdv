@@ -41,9 +41,10 @@
 <div th:replace="index::header"></div>
 
 <div class="container bucket-container">
+    <div id="noItems" style="display: none;text-align: center ">No liked items now </div>
 <div class="bucket-item" th:each="item:${items}">
     <div class="image">
-        <img width="150px" height="150px" th:src="@{images/{image}(image=${item.image})}"
+        <img id="ava" width="150px" height="150px" th:src="@{images/{image}(image=${item.image})}"
              alt="product">
     </div>
 
@@ -57,5 +58,12 @@
     </div>
 </div>
 </div>
+<script>
+    let elementById = document.getElementById("ava");
+    let elementById1 = document.getElementById("noItems");
+    if (!elementById){
+        elementById1.style.display = ''
+    }
+</script>
 </body>
 </html>

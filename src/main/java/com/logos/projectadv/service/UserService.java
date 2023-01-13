@@ -18,6 +18,8 @@ public interface UserService {
 
     User getUserFromPrincipal(Principal principal);
 
+    Object getObjFromSession(String objectName);
+
     void setIdInSession(String nameId, int id);
 
     String transferFile(MultipartFile file);

@@ -4,7 +4,6 @@ import com.logos.projectadv.models.Item;
 import com.logos.projectadv.models.Role;
 import com.logos.projectadv.models.User;
 import com.logos.projectadv.repository.ProductRepository;
-import com.logos.projectadv.repository.UserRepository;
 import com.logos.projectadv.service.BucketService;
 import com.logos.projectadv.service.ProductService;
 import com.logos.projectadv.service.UserService;
@@ -12,14 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
-
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

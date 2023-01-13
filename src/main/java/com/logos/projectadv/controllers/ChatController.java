@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -35,7 +31,10 @@ public class ChatController {
         userService.setIdInSession("getterId", getterId);
         User sender = userService.getUserFromPrincipal(principal);
         List<Chat> all = chatService.getAll(sender.getId(), getterId);
+        User getter = userService.getUserById(getterId);
         model.addAttribute("chat", all);
+        model.addAttribute("user", sender);
+        model.addAttribute("getter", getter);
         return "chat";
     }
 
@@ -45,21 +44,24 @@ public class ChatController {
         int userId = user.getId();
         Item item = productService.getItemFromSession();
         int adminId = item.getUserId();
+        User getter = userService.getUserById(adminId);
         List<Chat> all = chatService.getAll(adminId, userId);
         model.addAttribute("chat",all);
+        model.addAttribute("user", user);
+        model.addAttribute("getter", getter);
         return "chat";
     }
 
     @PostMapping("/messageSend")
     RedirectView sendMessage(@RequestParam String message, Principal principal){
         RedirectView redirectView = new RedirectView();
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attributes.getRequest().getSession();
+        Object getterId = userService.getObjFromSession("getterId");
         User sender = userService.getUserFromPrincipal(principal);
-        Object getterId = session.getAttribute("getterId");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString().substring(0, 16);
         if (getterId != null) {
             User getter = userService.getUserById((Integer) getterId);
-            Chat chat = new Chat(message, getter.getId(), new Timestamp(System.currentTimeMillis()), sender);
+            Chat chat = new Chat(message, getter.getId(), time, sender);
             chatService.save(chat);
             String id = Integer.toString(getter.getId());
             redirectView.setUrl("/chatWith/" + id);
@@ -67,7 +69,7 @@ public class ChatController {
         }
         Item item = productService.getItemFromSession();
         User admin = userService.getUserById(item.getUserId());
-        Chat chat = new Chat(message,sender.getId(),new Timestamp(System.currentTimeMillis()),admin);
+        Chat chat = new Chat(message,admin.getId(),time,sender);
         chatService.save(chat);
         redirectView.setUrl("/userChat");
         return redirectView;

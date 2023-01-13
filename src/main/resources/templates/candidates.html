@@ -25,10 +25,12 @@
             <b>Phone number : </b><b style="font-weight: normal" th:text="${userx.phoneNumber}"></b>
         </div>
         <div class="buttons">
-            <a th:href="@{/chatWith/{userId}(userId=${userx.id})}" ><button >Chat</button></a>
-        </div>
-        <div class="buttons">
-            <a th:href="@{/rejectCV/{userId}(userId=${userx.id})}" ><button  class="btn btn-danger">Reject</button></a>
+            <a th:href="@{/chatWith/{userId}(userId=${userx.id})}">
+                <button class="btn">Chat</button>
+            </a>
+            <a th:href="@{/rejectCV/{userId}(userId=${userx.id})}">
+                <button  class="btn btn-danger">Reject</button>
+            </a>
         </div>
     </div>
 </div>

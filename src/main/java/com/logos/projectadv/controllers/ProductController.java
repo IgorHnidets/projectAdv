@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -19,20 +19,29 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final UserService userService;
 
+    private final UserService userService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     @GetMapping("/index")
-    public String getall(Model model, Principal principal) {
+    public String getall(@RequestParam(defaultValue = "none") String compare, Model model, Principal principal) {
         User user = userService.getUserFromPrincipal(principal);
         int userId = user.getId();
         List<Item> items = productService.getAll();
+        System.out.println("------------------------------------------" + compare);
         userService.setIdInSession("userId",userId);
+        if (compare.equals("Salary increase")){
+            Collections.sort(items);
+        } else if (compare.equals("Salary decrease")){
+            Collections.sort(items);
+            Collections.reverse(items);
+        }
         model.addAttribute("user", user);
         model.addAttribute("items", items);
         return "index";
     }
+
+
 
     @GetMapping("/product/delete")
     RedirectView deleteProduct() {
@@ -43,7 +52,6 @@ public class ProductController {
         redirectView.setUrl("/index");
         return redirectView;
     }
-
     @GetMapping("/product/{itemId}")
     public String getProdById(@PathVariable int itemId, Model model) {
         try {
@@ -58,7 +66,6 @@ public class ProductController {
         }
         return "404";
     }
-
     @RequestMapping(value = "/createproduct", method = RequestMethod.GET)
     @GetMapping("/createproduct")
     String getUser(Model model, Principal principal) {
@@ -66,8 +73,6 @@ public class ProductController {
         model.addAttribute("user", user);
         return "createproduct";
     }
-
-
     @PostMapping("/product/save")
     public RedirectView saveItem(@RequestParam String name,
                                  @RequestParam String description,
@@ -91,5 +96,4 @@ public class ProductController {
         redirectView.setUrl("/index");
         return redirectView;
     }
-
 }
