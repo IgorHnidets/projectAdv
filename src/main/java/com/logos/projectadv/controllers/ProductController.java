@@ -18,18 +18,30 @@ import java.util.*;
 public class ProductController {
 
     private final ProductService productService;
-
-
     private final UserService userService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     @GetMapping("/index")
-    public String getall(@RequestParam(defaultValue = "none") String compare, Model model, Principal principal) {
+    public String getall(@RequestParam(defaultValue = "none") String compare,
+                         @RequestParam(defaultValue = "none") String selectOfCat,
+                         Model model, Principal principal) {
         User user = userService.getUserFromPrincipal(principal);
         int userId = user.getId();
         List<Item> items = productService.getAll();
         System.out.println("------------------------------------------" + compare);
         userService.setIdInSession("userId",userId);
+        if (!selectOfCat.equals("none")){
+            List<Item> itemByCat = productService.getItemByCat(selectOfCat);
+            if (compare.equals("Salary increase")){
+                Collections.sort(itemByCat);
+            } else if (compare.equals("Salary decrease")){
+                Collections.sort(itemByCat);
+                Collections.reverse(itemByCat);
+            }
+            model.addAttribute("user", user);
+            model.addAttribute("items", itemByCat);
+            return "index";
+        }
         if (compare.equals("Salary increase")){
             Collections.sort(items);
         } else if (compare.equals("Salary decrease")){
@@ -75,13 +87,15 @@ public class ProductController {
     }
     @PostMapping("/product/save")
     public RedirectView saveItem(@RequestParam String name,
+                                 @RequestParam String category,
                                  @RequestParam String description,
                                  @RequestParam double salary,
+                                 @RequestParam String location,
                                  @RequestParam String phoneNumber,
                                  @RequestParam MultipartFile image,
                                  @RequestParam int userId,
                                  Model model) {
-        Item item = new Item(name, description, phoneNumber, salary, userId);
+        Item item = new Item(name, category, description, phoneNumber, location, salary, userId);
         model.addAttribute("item", item);
         RedirectView redirectView = new RedirectView();
         if (image.isEmpty()) {

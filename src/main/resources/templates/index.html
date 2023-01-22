@@ -33,6 +33,7 @@
         </div>
     </div>
 </header>
+<div style="display:inline-block; margin: 30px 30px -30px 30px">
 <form action="/index">
 <label for="select">Compare by</label>
 <select name="compare" id="select" onchange="getValue()">
@@ -40,8 +41,23 @@
     <option value="Salary increase">Salary increase</option>
     <option value="Salary decrease">Salary decrease</option>
 </select>
-    <button type="submit">Compare</button>
+    <label for="select2">Select category</label>
+    <select name="selectOfCat" id="select2" onchange="getValue()">
+        <option value="none">none</option>
+        <option value="Construction">Construction</option>
+        <option value="Kitchen">Kitchen</option>
+        <option value="IT">IT</option>
+        <option value="HealthCare">HealthCare</option>
+        <option value="Management">Management</option>
+        <option value="Finance">Finance</option>
+        <option value="Logistic">Logistic</option>
+        <option value="Security">Security</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Fitness">Fitness</option>
+    </select>
+    <button type="submit">Submit</button>
 </form>
+</div>
 <div>
 <div class="album py-5" >
     <div class="container-fluid">
@@ -62,8 +78,15 @@
                                        <div style="display: none" id="liked"><i class="fa-solid fa-heart"></i></div>
                                     </button>
                                </a>
+                               <span>
+                                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="30px" height="25px" viewBox="0 0 425.963 425.963" style="enable-background:new 0 0 425.963 425.963;" xml:space="preserve"><g><path d="M213.285,0h-0.608C139.114,0,79.268,59.826,79.268,133.361c0,48.202,21.952,111.817,65.246,189.081
+                                      c32.098,57.281,64.646,101.152,64.972,101.588c0.906,1.217,2.334,1.934,3.847,1.934c0.043,0,0.087,0,0.13-0.002   c1.561-0.043,3.002-0.842,3.868-2.143c0.321-0.486,32.637-49.287,64.517-108.976c43.03-80.563,64.848-141.624,64.848-181.482   C346.693,59.825,286.846,0,213.285,0z M274.865,136.62c0,34.124-27.761,61.884-61.885,61.884
+                                        c-34.123,0-61.884-27.761-61.884-61.884s27.761-61.884,61.884-61.884C247.104,74.736,274.865,102.497,274.865,136.62z" fill="#FF0000"/></g></svg>
+                               <b th:text="${item.location}"></b>
+                               </span>
+<!--                                <i class="fa-solid fa-location-crosshairs"></i>-->
                             </div>
-                            <span>Salary: <span class="text-muted" th:text=" ${item.salary}"> $</span></span>
+                            <span>Salary: <span class="text-muted" th:text=" ${item.salary}"></span>$</span>
                         </div>
                     </div>
                 </div>

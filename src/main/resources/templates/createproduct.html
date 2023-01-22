@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Work Item</title>
     <div th:replace="index::boot"></div>
-
 </head>
 <body>
 
@@ -26,6 +25,23 @@
             <input  type="text" class="form-control" name="name" id="name" placeholder="Some Work">
         </div>
         <div class="mb-3">
+            <label for="select">Choose category</label>
+            <select name="category" id="select">
+                <option disabled>choose category</option>
+                <option value="Construction">Construction</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="IT">IT</option>
+                <option value="HealthCare">HealthCare</option>
+                <option value="Management">Management</option>
+                <option value="Finance">Finance</option>
+                <option value="Logistic">Logistic</option>
+                <option value="Security">Security</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
@@ -36,6 +52,21 @@
         <div class="mb-3">
             <label for="phoneNumber" class="form-label">Phone Number</label>
             <input  type="number" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <select name="location" id="location">
+                <option disabled>choose city</option>
+                <option value="Kyiv">Kyiv</option>
+                <option value="Odessa">Odessa</option>
+                <option value="Kharkiv">Kharkiv</option>
+                <option value="Donetsk">Donetsk</option>
+                <option value="Dnipro">Dnipro</option>
+                <option value="Luhansk">Luhansk</option>
+                <option value="Lviv">Lviv</option>
+                <option value="Sevastopol">Sevastopol</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Preview Image</label>
@@ -52,6 +83,5 @@
         <input type="submit" class="btn btn-primary">
     </form>
 </div>
-
 </body>
 </html>

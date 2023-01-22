@@ -23,6 +23,8 @@ public interface ProductRepository extends JpaRepository<Item,Integer> {
 
     List<Item> findByUserId(int userId);
 
+    List<Item> findByCategory(String category);
+
     @Modifying
     @Transactional
     @Query(value = "insert into items_users values (?1,?2)",
